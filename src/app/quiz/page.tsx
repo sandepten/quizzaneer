@@ -1,3 +1,4 @@
+import QuizCreation from "@/components/quiz/QuizCreation";
 import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
@@ -10,13 +11,7 @@ const Quiz = async () => {
   if (!session?.user) {
     return redirect("/");
   }
-  return (
-    <main className="mx-auto max-w-7xl p-4 sm:p-8">
-      <div className="flex items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Quiz</h1>
-      </div>
-    </main>
-  );
+  return <QuizCreation />;
 };
 
 export default Quiz;

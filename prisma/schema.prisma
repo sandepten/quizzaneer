@@ -49,4 +49,33 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    Game          Game[]
+}
+
+enum GameType {
+    MCQ
+    OPEN
+}
+
+model Game {
+    id        String     @id @default(cuid())
+    topic     String
+    type      GameType
+    userId    String
+    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt DateTime   @default(now())
+    Question  Question[]
+
+    @@index([userId], name: "userId")
+}
+
+model Question {
+    id        String   @id @default(cuid())
+    question  String
+    answer    String
+    gameId    String
+    game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+
+    @@index([gameId], name: "gameId")
 }

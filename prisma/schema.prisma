@@ -49,7 +49,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    Game          Game[]
+    games         Game[]
 }
 
 enum GameType {
@@ -64,18 +64,23 @@ model Game {
     userId    String
     user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
     createdAt DateTime   @default(now())
-    Question  Question[]
+    questions Question[]
 
     @@index([userId], name: "userId")
 }
 
 model Question {
-    id        String   @id @default(cuid())
-    question  String
-    answer    String
-    gameId    String
-    game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
-    createdAt DateTime @default(now())
+    id                String   @id @default(cuid())
+    question          String
+    answer            String
+    options           Json? // only for MCQ
+    percentageCorrect Float? // only for OPEN
+    type              GameType
+    userAnswer        String?
+    isCorrect         Boolean? // only for MCQ
+    gameId            String
+    game              Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+    createdAt         DateTime @default(now())
 
     @@index([gameId], name: "gameId")
 }

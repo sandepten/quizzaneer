@@ -68,7 +68,6 @@ export default function QuizCreation() {
               )}
               className="flex flex-col gap-6"
             >
-              z
               <FormField
                 control={form.control}
                 name="topic"
